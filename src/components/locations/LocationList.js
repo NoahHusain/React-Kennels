@@ -1,6 +1,7 @@
 import React, { useContext, useEffect } from "react"
 import { LocationContext } from "./LocationProvider"
 import "./Locations.css"
+import { useHistory } from "react-router-dom";
 
 export const LocationList = () => {
   // This state changes when `getLocations()` is invoked below
@@ -12,8 +13,15 @@ export const LocationList = () => {
     getLocations()
   }, [])
 
+// Invoke the useHistory() hook function
+const history = useHistory();
 
-  return (
+return (
+  <>
+    <h2>Locations</h2>
+    <button onClick={() => history.push("/locations/create")}>
+      Add Location
+    </button>
     <section className="locations">
       {
         locations.map(location => {
@@ -30,5 +38,6 @@ export const LocationList = () => {
         })
       }
     </section>
+    </>
   )
 }

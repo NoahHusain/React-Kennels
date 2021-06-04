@@ -1,16 +1,14 @@
 import React, { useContext, useEffect, useState } from "react";
-import "./Employees.css";
+import "./Locations.css";
 import { useHistory } from "react-router-dom";
 import { LocationContext } from "../locations/LocationProvider";
-import { EmployeeContext } from "./EmployeeProvider";
 
-export const EmployeeForm = () => {
-  const { addEmployee } = useContext(EmployeeContext);
-  const { locations, getLocations } = useContext(LocationContext);
+export const LocationForm = () => {
+  const { getLocations, addLocation } = useContext(LocationContext);
 
-  const [employee, setEmployees] = useState({
+  const [locations, setLocations] = useState({
     name: "",
-    locationId: 0,
+    address: "",
   });
 
   const history = useHistory();
@@ -24,63 +22,59 @@ export const EmployeeForm = () => {
   const handleControlledInputChange = (event) => {
     /* When changing a state object or array,
     always create a copy, make changes, and then set state.*/
-    const newEmployee = { ...employee };
+    const newLocation = { ...locations };
     /* Animal is an object with properties.
     Set the property to the new value
     using object bracket notation. */
-    newEmployee[event.target.id] = event.target.value;
+    newLocation[event.target.id] = event.target.value;
     // update state
-    setEmployees(newEmployee);
+    setLocations(newLocation);
   };
 
-  const handleClickSaveEmployee = (event) => {
+  const handelClickSaveLocation = (event) => {
     event.preventDefault(); //Prevents the browser from submitting the form
-    const newEmployee = {
-      name: employee.name,
-      locationId: parseInt(employee.locationId),
+    const newLocation = {
+      name: locations.name,
+      address: locations.address,
     };
-    addEmployee(newEmployee).then(() => history.push("/employees"));
+    addLocation(newLocation).then(() => history.push("/locations"));
   };
 
   return (
     <form className="employeeForm">
-      <h2 className="employeeForm__title">New Employee</h2>
+      <h2 className="employeeForm__title">New Locations</h2>
       <fieldset>
         <div className="form-group">
-          <label htmlFor="name">Employee name:</label>
+          <label htmlFor="name">Location Name:</label>
           <input
             type="text"
             id="name"
             required
             autoFocus
             className="form-control"
-            placeholder="Employee name"
-            value={employee.name}
+            placeholder="Location name"
+            value={locations.name}
             onChange={handleControlledInputChange}
           />
         </div>
       </fieldset>
       <fieldset>
         <div className="form-group">
-          <label htmlFor="location">Assign to location: </label>
-          <select
-            name="locationId"
-            id="locationId"
+          <label htmlFor="name">Location Address:</label>
+          <input
+            type="text"
+            id="address"
+            required
+            autoFocus
             className="form-control"
-            value={employee.locationId}
+            placeholder="Location Address"
+            value={locations.address}
             onChange={handleControlledInputChange}
-          >
-            <option value="0">Select a location</option>
-            {locations.map((l) => (
-              <option key={l.id} value={l.id}>
-                {l.name}
-              </option>
-            ))}
-          </select>
+          />
         </div>
       </fieldset>
-      <button className="btn btn-primary" onClick={handleClickSaveEmployee}>
-        Save Employee
+      <button className="btn btn-primary" onClick={handelClickSaveLocation}>
+        Save Location
       </button>
     </form>
   );
