@@ -29,9 +29,9 @@ export const EmployeeDetail = () => {
     }
     return (
     
-    <section className="animal">
+    <section className="employee">
         <h3 className="employee__name">{ employee.name }</h3>
-        <div className="animal__location">Location: { findLocation() }</div>
+        <div className="employee__location">Location: { findLocation() }</div>
     </section>
     )
 }
