@@ -1,51 +1,32 @@
-import React, { useContext, useEffect } from "react";
-import { useHistory } from "react-router-dom";
-import { EmployeeContext } from "./EmployeeProvider";
-import "./Employees.css";
+import React, { useState, useContext, useEffect } from "react"
+import { EmployeeContext } from "./EmployeeProvider"
+import {Link} from 'react-router-dom'
+import "./Employees.css"
 
-export const EmployeeList = () => {
-  // This state changes when `getEmployees()` is invoked below
-  const { employees, getEmployees } = useContext(EmployeeContext);
+export const EmployeeList = ({ history }) => {
+    const { getEmployees, employees } = useContext(EmployeeContext)
 
-  //useEffect - reach out to the world for something
-  useEffect(() => {
-    console.log("EmployeeList: useEffect - getEmployees");
-    getEmployees();
-  }, []);
+    // Initialization effect hook -> Go get employee data
+    useEffect(()=>{
+        getEmployees()
+    }, [])
 
-  const employeeLocation = (locationId) => {
-    if (locationId === 1) {
-      return "Nashville North";
-    } else {
-      return "Nashville South";
-    }
-  };
+    return (
+        <>
+            <h1>Employees</h1>
 
-  // Invoke the useHistory() hook function
-  const history = useHistory();
+            <button onClick={() => history.push("/employees/create")}>
+              New Employee
+            </button>
 
-  return (
-    <>
-      <h2>Employees</h2>
-      <button onClick={() => history.push("/employees/create")}>
-        Add Employee
-      </button>
-      <section className="employees">
-        {employees.map((employee) => {
-          return (
-            <div
-              key={employee.id}
-              className="employee"
-              id={`employee--${employee.id}`}
-            >
-              <div className="employee__name">{employee.name}</div>
-              <div className="employee__location">
-                {employeeLocation(parseInt(employee.locationId))}
-              </div>
+            <div className="employees">
+                {
+                    employees.map(employee => <Link to={`/employees/detail/${employee.id}`}>
+                          { employee.name }
+                        </Link>
+                    )
+                }
             </div>
-          );
-        })}
-      </section>
-    </>
-  );
-};
+        </>
+    )
+}
