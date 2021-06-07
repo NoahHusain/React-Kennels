@@ -1,10 +1,12 @@
 import React, { useState, useContext, useEffect } from "react"
 import { EmployeeContext } from "./EmployeeProvider"
-import {Link} from 'react-router-dom'
+import { useHistory, Link } from 'react-router-dom'
 import "./Employees.css"
 
-export const EmployeeList = ({ history }) => {
+export const EmployeeList = () => {
     const { getEmployees, employees } = useContext(EmployeeContext)
+    const history = useHistory()
+
 
     // Initialization effect hook -> Go get employee data
     useEffect(()=>{
