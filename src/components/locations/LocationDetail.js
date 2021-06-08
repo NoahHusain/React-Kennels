@@ -7,10 +7,6 @@ export const LocationDetail = () => {
     const { locations } = useContext(LocationContext)
     const [ location, setLocations ] = useState({ employees: [], animals: [] })
 
-    /*
-        Given the example URL above, this will store the value
-        of 5 in the animalId variable
-    */
     const { locationId } = useParams();
 
 
