@@ -23,7 +23,7 @@ export const EmployeeList = () => {
 
             <div className="employees">
                 {
-                    employees.map(employee => <Link to={`/employees/detail/${employee.id}`}>
+                    employees.map(employee => <Link className = "employee" to={`/employees/detail/${employee.id}`}>
                           { employee.name }
                         </Link>
                     )
